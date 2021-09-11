@@ -21,7 +21,11 @@ public final class RemoteFeedLoader: FeedLoader {
 	public func load(completion: @escaping (FeedLoader.Result) -> Void) {
 		client.get(from: url) { result in
 			switch result {
-			case let .success((data, _)):
+			case let .success((data, response)):
+				guard response.statusCode == 200 else {
+					return completion(.failure(RemoteFeedLoader.Error.invalidData))
+				}
+
 				do {
 					let feedResult = try JSONDecoder().decode(FeedResult.self, from: data)
 					let feedImages = feedResult.items.map { FeedImage($0) }
