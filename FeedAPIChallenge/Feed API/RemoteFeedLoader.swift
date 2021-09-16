@@ -5,6 +5,10 @@
 import Foundation
 
 public final class RemoteFeedLoader: FeedLoader {
+	enum Constants {
+		static let okCode = 200
+	}
+
 	private let url: URL
 	private let client: HTTPClient
 
@@ -34,7 +38,7 @@ public final class RemoteFeedLoader: FeedLoader {
 
 	private static func feedLoaderResult(from data: Data, response: HTTPURLResponse) -> FeedLoader.Result {
 		guard
-			response.statusCode == 200,
+			response.statusCode == Constants.okCode,
 			let feedResult = try? JSONDecoder().decode(FeedResult.self, from: data) else {
 			return .failure(Error.invalidData)
 		}
