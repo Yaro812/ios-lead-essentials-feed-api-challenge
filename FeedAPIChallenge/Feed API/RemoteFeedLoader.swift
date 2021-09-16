@@ -43,6 +43,6 @@ public final class RemoteFeedLoader: FeedLoader {
 			return .failure(Error.invalidData)
 		}
 
-		return .success(feedResult.items.map { FeedImage($0) })
+		return .success(feedResult.items.map(FeedImage.init))
 	}
 }
