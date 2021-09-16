@@ -5,7 +5,7 @@
 import Foundation
 
 public final class RemoteFeedLoader: FeedLoader {
-	enum Constants {
+	private enum Constants {
 		static let okCode = 200
 	}
 
