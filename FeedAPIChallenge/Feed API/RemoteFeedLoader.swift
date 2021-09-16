@@ -42,7 +42,9 @@ public final class RemoteFeedLoader: FeedLoader {
 	}
 
 	private func feedImages(from data: Data) throws -> [FeedImage] {
-		let feedResult = try JSONDecoder().decode(FeedResult.self, from: data)
+		guard let feedResult = try? JSONDecoder().decode(FeedResult.self, from: data) else {
+			throw Error.invalidData
+		}
 		return feedResult.items.map { FeedImage($0) }
 	}
 }
