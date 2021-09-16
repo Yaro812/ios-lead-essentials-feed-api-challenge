@@ -28,7 +28,7 @@ public final class RemoteFeedLoader: FeedLoader {
 					return completion(.failure(Error.invalidData))
 				}
 
-				completion(Result { try self.feedImages(from: data) })
+				completion(Result { try RemoteFeedLoader.feedImages(from: data) })
 
 			case .failure:
 				completion(.failure(Error.connectivity))
@@ -36,7 +36,7 @@ public final class RemoteFeedLoader: FeedLoader {
 		}
 	}
 
-	private func feedImages(from data: Data) throws -> [FeedImage] {
+	private static func feedImages(from data: Data) throws -> [FeedImage] {
 		guard let feedResult = try? JSONDecoder().decode(FeedResult.self, from: data) else {
 			throw Error.invalidData
 		}
