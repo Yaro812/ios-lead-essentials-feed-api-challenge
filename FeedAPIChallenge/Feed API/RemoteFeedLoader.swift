@@ -28,12 +28,7 @@ public final class RemoteFeedLoader: FeedLoader {
 					return completion(.failure(Error.invalidData))
 				}
 
-				do {
-					let feedImages = try self.feedImages(from: data)
-					completion(.success(feedImages))
-				} catch {
-					completion(.failure(Error.invalidData))
-				}
+				completion(Result { try self.feedImages(from: data) })
 
 			case .failure:
 				completion(.failure(Error.connectivity))
